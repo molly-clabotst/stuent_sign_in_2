@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <NewStudentForm v-on:student-added="newStudentAdded"></NewStudentForm>
-    <StudentTable v-bind:students="students" v-on:student-present="studentArrivedOrLeft" ></StudentTable>
+    <StudentTable v-bind:students="students"
+                  v-on:student-present="studentArrivedOrLeft"
+                  v-on:delete-student="studentDeleted"></StudentTable>
     <StudentMessage v-bind:message="message" v-bind:name="name"></StudentMessage>
   </div>
 </template>
@@ -15,7 +17,9 @@ export default {
   name: 'app',
   data(){
     return{
-      students:[]
+      students:[],
+      message: '',
+      name: ''
     }
   },
   components: {
@@ -33,6 +37,11 @@ export default {
     studentArrivedOrLeft(student){
       this.message = student.present ? 'Welcome, ':'Goodbye, ';
       this.name = student.name;
+    },
+    studentDeleted(student){
+      this.students = this.students.filter(function (s) {
+        return s != student
+      })
     }
   }
 }
@@ -43,7 +52,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }

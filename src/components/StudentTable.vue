@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!--        Write Template Here-->
         <div class="card student-list m-2 p-2">
             <h4 class="card-title">Students</h4>
             <div class="edit-table-toggle form-check">
@@ -21,7 +20,8 @@
                             v-bind:key="student.name"
                             v-bind:student="student"
                             v-bind:edit="editTable"
-                            v-on:student-present="studentArrivedOrLeft">
+                            v-on:student-present="studentArrivedOrLeft"
+                            v-on:delete-student="studentDeleted">
 
                     </StudentRow>
                 </table>
@@ -32,16 +32,24 @@
 
 <script>
     // Create and export component here
-    import StudentRow from "./StudentRow";
+    import StudentRow from "../components/StudentRow.vue";
     export default {
         name: 'StudentTable',
         components: {StudentRow},
+        data(){
+            return{
+                editTable: false
+            }
+        },
         props:{
             students: Array
         },
         methods:{
             studentArrivedOrLeft(student){
                 this.$emit('student-present',student)
+            },
+            studentDeleted(student){
+                this.$emit('delete-student', student)
             }
         }
     }
