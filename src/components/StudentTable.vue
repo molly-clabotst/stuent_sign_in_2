@@ -56,7 +56,7 @@
 </script>
 
 <style>
-    /*write any styles for theis component here*/
+    /*write any styles for this component here*/
     #student-table {
         max-height: 500px;
         overflow: scroll;
